@@ -1,0 +1,1235 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 자동화 컨설팅 PPT 작업판</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --surface-2: #eef6f4;
+      --ink: #1f2933;
+      --muted: #607080;
+      --line: #d7dee7;
+      --blue: #1f5eff;
+      --blue-dark: #173b8f;
+      --green: #16846b;
+      --amber: #b76b00;
+      --red: #b42318;
+      --shadow: 0 10px 30px rgba(31, 41, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Segoe UI", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      background: #172033;
+      color: #f8fafc;
+      overflow: auto;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--blue-dark);
+      font-weight: 800;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .brand-subtitle {
+      margin: 2px 0 0;
+      color: #bfd0ea;
+      font-size: 13px;
+    }
+
+    .nav-label {
+      margin: 20px 8px 8px;
+      color: #9fb2cf;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #f8fafc;
+      font-size: 14px;
+    }
+
+    .nav a:hover,
+    .nav a:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px clamp(18px, 4vw, 44px);
+      background: rgba(246, 247, 249, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar strong {
+      font-size: 15px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #ffffff;
+    }
+
+    .btn:hover,
+    .btn:focus {
+      outline: 3px solid rgba(31, 94, 255, 0.18);
+    }
+
+    .section {
+      padding: 34px clamp(18px, 4vw, 44px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section:first-of-type {
+      padding-top: 28px;
+    }
+
+    .section h1,
+    .section h2 {
+      margin: 0 0 14px;
+      line-height: 1.25;
+    }
+
+    .section h1 {
+      font-size: clamp(28px, 4vw, 42px);
+    }
+
+    .section h2 {
+      font-size: clamp(23px, 3vw, 31px);
+    }
+
+    .lead {
+      max-width: 880px;
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .status {
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .status b {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .status span {
+      font-weight: 800;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      counter-reset: step;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .step h3 {
+      margin: 0 0 4px;
+      font-size: 17px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background: #edf2ff;
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tag.green {
+      background: #e8f6f2;
+      color: var(--green);
+    }
+
+    .tag.amber {
+      background: #fff4df;
+      color: var(--amber);
+    }
+
+    .list {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .list li {
+      margin: 6px 0;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    details + details {
+      margin-top: 10px;
+    }
+
+    summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--green);
+      flex: 0 0 auto;
+    }
+
+    details[open] summary::after {
+      content: "-";
+    }
+
+    .details-body {
+      padding: 0 16px 16px;
+    }
+
+    .prompt {
+      margin: 0;
+      padding: 14px;
+      border-radius: 8px;
+      background: #101828;
+      color: #f8fafc;
+      overflow: auto;
+      white-space: pre-wrap;
+      font-family: Consolas, "D2Coding", monospace;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .prompt-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+
+    .prompt-head h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef2f7;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .notice {
+      padding: 14px 16px;
+      border-left: 5px solid var(--amber);
+      border-radius: 8px;
+      background: #fff8eb;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      padding: 28px clamp(18px, 4vw, 44px);
+      color: var(--muted);
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #172033;
+      color: #ffffff;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid.cols-3,
+      .grid.cols-2,
+      .status-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .top-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+      }
+
+      summary {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" aria-label="페이지 이동">
+      <div class="brand">
+        <div class="brand-mark">AI</div>
+        <div>
+          <p class="brand-title">PPT 작업판</p>
+          <p class="brand-subtitle">초보자용 한 장 HTML</p>
+        </div>
+      </div>
+
+      <div class="nav-label">바로가기</div>
+      <nav class="nav">
+        <a href="#overview">전체 보기</a>
+        <a href="#workflow">작업 순서</a>
+        <a href="#constitution">개인 헌법</a>
+        <a href="#files">파일 역할</a>
+        <a href="#beginner">초보자 사용법</a>
+        <a href="#business">사업 내용</a>
+        <a href="#design">디자인 방향</a>
+        <a href="#deck">PPT 구성</a>
+        <a href="#prompts">프롬프트</a>
+        <a href="#github">GitHub 저장</a>
+        <a href="#next">다음 확인</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <strong>AI 자동화 컨설팅 제안서 준비 현황</strong>
+        <div class="top-actions">
+          <a class="btn" href="#prompts">프롬프트 보기</a>
+          <button class="btn primary" type="button" data-copy="quick-status">상태확인 프롬프트 복사</button>
+        </div>
+      </div>
+
+      <section class="section" id="overview">
+        <h1>AI 자동화 컨설팅 PPT 작업판</h1>
+        <p class="lead">지금까지 만든 문서와 폴더를 한 페이지로 모았습니다. 초보자는 왼쪽 메뉴를 누르고, 필요한 프롬프트를 복사해서 Codex에게 붙여넣으면 됩니다.</p>
+
+        <div class="status-row">
+          <div class="status">
+            <b>현재 단계</b>
+            <span>제작 전 준비</span>
+          </div>
+          <div class="status">
+            <b>PPT 파일</b>
+            <span>아직 만들지 않음</span>
+          </div>
+          <div class="status">
+            <b>GitHub</b>
+            <span>연결 완료</span>
+          </div>
+          <div class="status">
+            <b>다음 할 일</b>
+            <span>고객 정보 확인</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="workflow">
+        <h2>작업 순서</h2>
+        <p class="lead">위에서 아래로 진행하면 됩니다. 아직은 1단계 준비가 끝난 상태입니다.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div>
+              <h3>작업 폴더 준비</h3>
+              <p>기본 문서, 디자인 초안, 사업 배경, PPT 구성 초안을 만들었습니다.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>고객 정보 채우기</h3>
+              <p>고객 회사명, 업종, 불편한 업무, 발표 대상, 원하는 결과를 정합니다.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>PPT 구성 확정</h3>
+              <p>슬라이드 순서와 각 슬라이드의 핵심 메시지를 확정합니다.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>자료 모으기</h3>
+              <p>로고, 이미지, 기존 문서, 참고 자료를 assets 폴더에 넣습니다.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>PPT 초안 만들기</h3>
+              <p>준비 문서를 바탕으로 output 폴더에 초안을 만듭니다.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>검토, 수정, 공유</h3>
+              <p>내용과 디자인을 확인한 뒤 최종본을 정리하고 공유합니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="constitution">
+        <h2>개인 헌법과 장기 목표</h2>
+        <p class="lead">모든 작업은 이 기준을 바탕으로 진행합니다. 핵심은 정보 공유, 약자와 초보자를 위한 쉬운 접근, 고객 우선, 품질과 표준, 시간이 내 편이 되는 전략입니다.</p>
+
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>개인 헌법</h3>
+            <ul class="list">
+              <li>정보는 공유될 때 힘을 발휘합니다.</li>
+              <li>사회적 약자가 유리한 세상을 지향합니다.</li>
+              <li>오늘보다 나아지는 내일을 지향합니다.</li>
+              <li>선한 의도가 힘을 가지려면 더 높은 지식과 시스템이 필요합니다.</li>
+              <li>목표 지향적으로 일합니다.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>장기 목표</h3>
+            <ul class="list">
+              <li>시간을 내 편으로 만드는 전략을 씁니다.</li>
+              <li>IPC 기반 한국형 전자생산 표준을 지향합니다.</li>
+              <li>ESA/NASA 기반 한국형 우주 표준을 지향합니다.</li>
+              <li>전자생산 교육과 품질 체계 확산을 목표로 합니다.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>비즈니스 원칙</h3>
+            <ul class="list">
+              <li>방산, 우주항공, 자동차 전장을 주요 고객으로 봅니다.</li>
+              <li>고객의 이익과 신뢰를 우선합니다.</li>
+              <li>진실과 선함을 비즈니스 전략의 중심에 둡니다.</li>
+              <li>조직보다 사람과 관계를 중요하게 봅니다.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="files">
+        <h2>만든 파일과 폴더</h2>
+        <p class="lead">각 파일이 무엇을 하는지 한 줄로 정리했습니다.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>역할</th>
+                <th>지금 상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>AGENTS.md</strong></td>
+                <td>Codex가 이 프로젝트에서 지켜야 할 작업 규칙입니다.</td>
+                <td><span class="tag green">초안 완료</span></td>
+              </tr>
+              <tr>
+                <td><strong>CODEX_BEGINNER_GUIDE.md</strong></td>
+                <td>코딩 초보자가 Codex를 안전하게 쓰는 방법입니다.</td>
+                <td><span class="tag green">초안 완료</span></td>
+              </tr>
+              <tr>
+                <td><strong>PROMPTS.md</strong></td>
+                <td>개발 전 준비부터 공유 전 점검까지 쓰는 프롬프트 모음입니다.</td>
+                <td><span class="tag green">초안 완료</span></td>
+              </tr>
+              <tr>
+                <td><strong>brand/DESIGN.md</strong></td>
+                <td>PPT의 분위기, 색상, 글꼴, 이미지 방향입니다.</td>
+                <td><span class="tag green">초안 완료</span></td>
+              </tr>
+              <tr>
+                <td><strong>context/business-context.md</strong></td>
+                <td>AI 자동화 컨설팅 제안서의 사업 배경입니다.</td>
+                <td><span class="tag amber">고객 정보 필요</span></td>
+              </tr>
+              <tr>
+                <td><strong>context/deck-brief.md</strong></td>
+                <td>PPT 슬라이드 순서와 발표 흐름입니다.</td>
+                <td><span class="tag amber">확정 필요</span></td>
+              </tr>
+              <tr>
+                <td><strong>assets/</strong></td>
+                <td>로고, 이미지, 참고 자료를 넣는 폴더입니다.</td>
+                <td><span class="tag">비어 있음</span></td>
+              </tr>
+              <tr>
+                <td><strong>output/</strong></td>
+                <td>나중에 완성된 PPT와 PDF를 넣는 폴더입니다.</td>
+                <td><span class="tag">비어 있음</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="beginner">
+        <h2>초보자용 Codex 사용법</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>기본 원칙</h3>
+            <ul class="list">
+              <li>먼저 설명을 듣고 작업합니다.</li>
+              <li>명령어는 한 줄씩 실행합니다.</li>
+              <li>삭제, 배포, GitHub 업로드는 먼저 확인합니다.</li>
+              <li>작업 후 바뀐 내용을 짧게 요약받습니다.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>이렇게 말하면 좋습니다</h3>
+            <ul class="list">
+              <li>초보자도 이해하게 쉬운 말로 설명해줘.</li>
+              <li>수정하지 말고 먼저 현재 상태만 확인해줘.</li>
+              <li>위험한 점이 있는지 먼저 알려줘.</li>
+              <li>다음에 내가 확인할 것을 체크리스트로 알려줘.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="business">
+        <h2>사업 내용 초안</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>제안서 주제</h3>
+            <p>AI 자동화로 반복 업무를 줄이고, 업무 처리 속도와 품질을 높이는 컨설팅 제안서입니다.</p>
+          </div>
+          <div class="card">
+            <h3>예상 고객</h3>
+            <p>반복 업무가 많고, AI 도입을 시작하고 싶지만 방법이 불명확한 회사나 팀입니다.</p>
+          </div>
+          <div class="card">
+            <h3>기대 효과</h3>
+            <p>업무 시간 절약, 문서 작성 속도 향상, 업무 품질 안정, AI 도입 시작점 정리입니다.</p>
+          </div>
+        </div>
+
+        <details open>
+          <summary>고객이 겪을 수 있는 문제</summary>
+          <div class="details-body">
+            <ul class="list">
+              <li>같은 일을 사람이 계속 반복합니다.</li>
+              <li>업무 자료가 여러 곳에 흩어져 있습니다.</li>
+              <li>보고서나 제안서 작성에 시간이 오래 걸립니다.</li>
+              <li>고객 문의나 내부 요청에 빠르게 답하기 어렵습니다.</li>
+              <li>AI 도구를 써보고 싶지만 적용 방법이 불명확합니다.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>제안할 수 있는 해결 방향</summary>
+          <div class="details-body">
+            <ul class="list">
+              <li>반복 문서 작업 자동화</li>
+              <li>고객 문의 초안 작성 자동화</li>
+              <li>회의록, 보고서, 제안서 초안 생성</li>
+              <li>업무 데이터 정리와 요약</li>
+              <li>팀별 AI 업무 흐름 설계</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+      <section class="section" id="design">
+        <h2>디자인 방향</h2>
+        <p class="lead">특정 브랜드의 공식 디자인 시스템이 아니라, 제안서 제작을 쉽게 시작하기 위한 작업용 방향입니다.</p>
+
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>분위기</h3>
+            <ul class="list">
+              <li>전문적</li>
+              <li>명확함</li>
+              <li>차분함</li>
+              <li>실행 중심</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>화면 구성</h3>
+            <ul class="list">
+              <li>한 슬라이드에는 한 가지 메시지만 담습니다.</li>
+              <li>표와 도식은 복잡하지 않게 만듭니다.</li>
+              <li>문제, 해결책, 기대 효과가 순서대로 보이게 만듭니다.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="deck">
+        <h2>PPT 구성 초안</h2>
+        <p class="lead">아직 PPT 파일은 만들지 않았습니다. 지금은 어떤 순서로 말할지 정해둔 상태입니다.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>순서</th>
+                <th>슬라이드</th>
+                <th>핵심 메시지</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>표지</td><td>제안서 제목, 고객명, 작성일</td></tr>
+              <tr><td>2</td><td>고객 문제</td><td>반복 업무, 느린 처리, 자료 분산</td></tr>
+              <tr><td>3</td><td>AI 자동화 필요성</td><td>AI 도구 확산, 업무 속도 경쟁, 내부 생산성 개선</td></tr>
+              <tr><td>4</td><td>적용 가능한 업무 예시</td><td>문서 초안, 문의 응답, 데이터 요약, 보고서 작성</td></tr>
+              <tr><td>5</td><td>컨설팅 진행 방식</td><td>진단, 우선순위 선정, 자동화 설계, 테스트, 교육</td></tr>
+              <tr><td>6</td><td>기대 효과</td><td>시간 절약, 품질 안정, 업무 집중도 향상</td></tr>
+              <tr><td>7</td><td>일정과 산출물</td><td>단계별 일정, 제공 문서, 자동화 예시</td></tr>
+              <tr><td>8</td><td>다음 단계</td><td>추가 인터뷰, 자료 공유, 상세 견적</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="prompts">
+        <h2>단계별 프롬프트</h2>
+        <p class="lead">필요한 단계의 복사 버튼을 누르고 Codex에 붙여넣으면 됩니다.</p>
+
+        <details open>
+          <summary>1단계: 개발 전 환경 준비</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>준비 폴더 만들기</h3>
+              <button class="btn" type="button" data-copy="prompt-1">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-1">목표:
+이 프로젝트를 AI 자동화 컨설팅 제안서 PPT 제작용 작업 폴더로 준비해줘.
+
+성공 기준:
+- AGENTS.md 생성
+- brand/DESIGN.md 생성
+- context/business-context.md 생성
+- context/deck-brief.md 생성
+- assets/와 output/ 폴더 생성
+- 각 파일에는 초안 내용이 들어가야 함
+
+제약:
+- 아직 PPT 파일은 만들지 말 것
+- 특정 브랜드의 공식 디자인 시스템이라고 쓰지 말 것
+- 초보자가 읽어도 이해되는 쉬운 말로 작성할 것
+
+출력:
+- 만든 파일 목록
+- 각 파일의 역할 한 줄 설명
+- 다음에 내가 확인해야 할 것</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>2단계: 프로젝트 구조 점검</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>현재 폴더 점검</h3>
+              <button class="btn" type="button" data-copy="prompt-2">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-2">현재 프로젝트 폴더를 점검해줘.
+
+확인할 것:
+- 필요한 파일과 폴더가 모두 있는지
+- 비어 있거나 내용이 부족한 문서가 있는지
+- PPT 제작 전에 더 채워야 할 정보가 무엇인지
+
+출력:
+- 준비 완료된 항목
+- 부족한 항목
+- 다음에 해야 할 일 3개
+
+주의:
+- 파일을 수정하지 말고 먼저 점검 결과만 알려줘.</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>3단계: 고객/사업 정보 정리</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>사업 정보 채우기</h3>
+              <button class="btn" type="button" data-copy="prompt-3">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-3">AI 자동화 컨설팅 제안서에 들어갈 사업 정보를 정리해줘.
+
+내가 제공할 정보:
+- 고객 회사명:
+- 업종:
+- 가장 불편한 업무:
+- 제안서 발표 대상:
+- 원하는 결과:
+
+작업:
+- context/business-context.md를 초보자도 이해하기 쉬운 말로 정리
+- 확정된 정보와 아직 모르는 정보를 나눠서 작성
+- 과장된 수치나 확인되지 않은 성과는 쓰지 말 것
+
+출력:
+- 수정한 내용 요약
+- 추가로 확인해야 할 질문</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>4단계: 디자인 방향 정리</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>디자인 기준 잡기</h3>
+              <button class="btn" type="button" data-copy="prompt-4">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-4">AI 자동화 컨설팅 제안서의 디자인 방향을 정리해줘.
+
+원하는 느낌:
+- 전문적
+- 깔끔함
+- 신뢰감
+- 너무 화려하지 않음
+
+작업:
+- brand/DESIGN.md를 업데이트
+- 색상, 글꼴, 슬라이드 구성, 이미지 사용 방향을 정리
+- 특정 브랜드의 공식 디자인 시스템이라고 쓰지 말 것
+
+출력:
+- 디자인 방향 요약
+- PPT 만들기 전에 필요한 자료 목록</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>5단계: PPT 구성안 만들기</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>슬라이드 순서 만들기</h3>
+              <button class="btn" type="button" data-copy="prompt-5">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-5">AI 자동화 컨설팅 제안서 PPT의 구성안을 만들어줘.
+
+조건:
+- 아직 PPT 파일은 만들지 말 것
+- 먼저 context/deck-brief.md에 슬라이드 구성 초안을 정리할 것
+- 초보자가 봐도 발표 흐름을 이해할 수 있게 작성할 것
+
+포함할 내용:
+- 표지
+- 고객 문제
+- AI 자동화가 필요한 이유
+- 적용 가능한 업무 예시
+- 컨설팅 진행 방식
+- 기대 효과
+- 일정과 산출물
+- 다음 단계
+
+출력:
+- 예상 슬라이드 목록
+- 각 슬라이드의 핵심 메시지
+- 더 필요한 고객 정보</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>6단계: 자료 수집 준비</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>필요 자료 체크</h3>
+              <button class="btn" type="button" data-copy="prompt-6">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-6">PPT 제작에 필요한 자료 목록을 정리해줘.
+
+작업:
+- assets/ 폴더에 넣어야 할 자료 목록 작성
+- 로고, 이미지, 참고 문서, 기존 제안서, 고객 자료를 구분
+- 내가 어떤 파일을 준비해야 하는지 쉽게 알려줘
+
+출력:
+- 필요한 자료 체크리스트
+- 자료가 없을 때 대체할 방법
+- 다음 작업 순서
+
+주의:
+- 아직 PPT 파일은 만들지 말 것</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>7단계: PPT 초안 제작</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>초안 만들기</h3>
+              <button class="btn" type="button" data-copy="prompt-7">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-7">준비된 문서를 바탕으로 AI 자동화 컨설팅 제안서 PPT 초안을 만들어줘.
+
+사용할 자료:
+- AGENTS.md
+- brand/DESIGN.md
+- context/business-context.md
+- context/deck-brief.md
+- assets/ 폴더 자료
+
+작업:
+- output/ 폴더에 PPT 초안 생성
+- 각 슬라이드는 한 가지 메시지만 담기
+- 어려운 용어는 쉬운 말로 바꾸기
+- 확인되지 않은 숫자나 성과는 넣지 않기
+
+출력:
+- 만든 PPT 파일명
+- 슬라이드 목록
+- 내가 검토해야 할 부분</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>8단계: 검토와 수정</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>PPT 검토하기</h3>
+              <button class="btn" type="button" data-copy="prompt-8">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-8">만든 PPT 초안을 검토해줘.
+
+확인할 것:
+- 발표 흐름이 자연스러운지
+- 고객 문제와 해결책이 잘 연결되는지
+- 너무 어려운 말이 있는지
+- 디자인이 일관적인지
+- 확인되지 않은 주장이나 수치가 있는지
+
+출력:
+- 잘 된 점
+- 수정이 필요한 점
+- 바로 고치면 좋은 우선순위 5개
+
+주의:
+- 먼저 검토 결과를 알려주고, 수정은 내가 요청하면 진행해줘.</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>9단계: 최종본 정리</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>발표 전 확인</h3>
+              <button class="btn" type="button" data-copy="prompt-9">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-9">PPT 최종본을 만들기 전에 파일과 내용을 정리해줘.
+
+작업:
+- output/ 폴더의 결과물 확인
+- 파일명이 알아보기 쉬운지 확인
+- 발표 전에 빠진 정보가 없는지 확인
+- 최종 검토 체크리스트 작성
+
+출력:
+- 최종본 후보 파일
+- 발표 전 확인할 것
+- 수정하면 좋은 마지막 항목</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>10단계: GitHub 저장</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>GitHub 올리기 전 점검</h3>
+              <button class="btn" type="button" data-copy="prompt-10">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-10">현재 변경사항을 GitHub에 올려도 되는지 확인해줘.
+
+작업:
+- 변경된 파일 목록 확인
+- 민감한 정보가 들어갔는지 확인
+- 커밋 메시지 추천
+- GitHub에 올리는 명령어를 한 줄씩 안내
+
+출력:
+- 올려도 되는 파일
+- 조심해야 할 파일
+- 추천 커밋 메시지
+- 실행할 명령어
+
+주의:
+- 내가 허락하기 전에는 git commit이나 git push를 실행하지 말 것</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>11단계: 배포 또는 공유 준비</summary>
+          <div class="details-body">
+            <div class="prompt-head">
+              <h3>공유 전 확인</h3>
+              <button class="btn" type="button" data-copy="prompt-11">복사</button>
+            </div>
+            <pre class="prompt" id="prompt-11">완성된 PPT를 공유하기 전에 배포 준비를 도와줘.
+
+확인할 것:
+- 최종 PPT 파일 위치
+- 공유해도 되는 내용인지
+- 고객명, 로고, 민감한 정보가 맞게 들어갔는지
+- PDF 변환이 필요한지
+- 공유용 파일명은 적절한지
+
+출력:
+- 공유 전 체크리스트
+- 추천 파일명
+- 공유할 때 같이 보낼 짧은 안내문
+
+주의:
+- 외부 업로드나 배포는 내가 직접 확인한 뒤 진행할 것</pre>
+          </div>
+        </details>
+      </section>
+
+      <section class="section" id="github">
+        <h2>GitHub 저장</h2>
+        <div class="notice">
+          <strong>지금 상태</strong>
+          GitHub 저장소는 연결되어 있습니다. 단, 지금 만든 문서들은 아직 커밋 전일 수 있습니다.
+        </div>
+
+        <div class="grid cols-2" style="margin-top: 14px;">
+          <div class="card">
+            <h3>올리기 전에 Codex에게 물어보기</h3>
+            <div class="prompt-head">
+              <span class="tag">추천</span>
+              <button class="btn" type="button" data-copy="prompt-10">복사</button>
+            </div>
+            <p>먼저 변경 파일과 민감한 정보가 없는지 확인받는 것이 안전합니다.</p>
+          </div>
+          <div class="card">
+            <h3>자주 쓰는 명령어</h3>
+            <pre class="prompt">git status
+git add .
+git commit -m "Update project guide"
+git push</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="next">
+        <h2>다음에 확인할 것</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>고객 정보</h3>
+            <ul class="list">
+              <li>제안서를 받을 고객 또는 회사 이름</li>
+              <li>고객의 업종</li>
+              <li>가장 불편한 업무 3가지</li>
+              <li>발표 대상</li>
+              <li>원하는 결과</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>PPT 제작 정보</h3>
+            <ul class="list">
+              <li>원하는 슬라이드 수</li>
+              <li>발표 시간</li>
+              <li>로고 사용 여부</li>
+              <li>참고 이미지나 기존 자료</li>
+              <li>딱딱한 톤 또는 친근한 톤</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <p>이 파일은 지금까지 만든 프로젝트 문서를 한 페이지로 모은 초보자용 작업판입니다. 외부 자료 없이 이 HTML 파일 하나만 열어도 확인할 수 있습니다.</p>
+      </div>
+    </main>
+  </div>
+
+  <pre id="quick-status" hidden>현재 상태 확인해줘. 수정하지 말고 먼저 요약만 해줘.</pre>
+  <div class="toast" id="toast" role="status" aria-live="polite">복사했습니다.</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+
+    async function copyText(id) {
+      const target = document.getElementById(id);
+      if (!target) return;
+      const text = target.textContent.trim();
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("복사했습니다.");
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        document.body.removeChild(area);
+        showToast("복사했습니다.");
+      }
+    }
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-copy]");
+      if (!button) return;
+      copyText(button.getAttribute("data-copy"));
+    });
+  </script>
+</body>
+</html>
